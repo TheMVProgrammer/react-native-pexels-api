@@ -1,10 +1,13 @@
-import { View, Text } from 'react-native'
+import { View, Image } from 'react-native'
 import React from 'react'
 
-const ImageScreen = () => {
+const ImageScreen = ({ route }) => {
+
+    const { image } = route.params;
+
   return (
     <View>
-      <Text>Image Screen</Text>
+      <Image source={{ uri: image.src.large, height: 350}} />
     </View>
   )
 }
