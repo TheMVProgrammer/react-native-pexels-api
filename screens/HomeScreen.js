@@ -7,15 +7,20 @@ import { Input, Button } from '@rneui/base'
 const HomeScreen = ({openSearch}) => {
 
     const [photos, setPhotos] = useState([])
+    const [searchTerm, setSearchTerm] = useState('')
 
-    const loadImages = async () =>  {
-        const res = await getImages();
+    const loadImages = async (searchTerm) =>  {
+        const res = await getImages(searchTerm);
         setPhotos(res.data.photos);
     }
 
     useEffect(() => {
         loadImages()
     }, [])
+
+    const handleSearch = async () => {
+        await loadImages(searchTerm);
+    }
 
   return (
     <>
@@ -25,12 +30,14 @@ const HomeScreen = ({openSearch}) => {
                     leftIcon={{type: 'feather', name: 'search', color: '#fff'}}
                     placeholder='Search a term'
                     style={styles.input}
-                    inputContainerStyle={styles.searchInput}
                     leftIconContainerStyle={styles.searchLeftIcon}
+                    inputContainerStyle={styles.searchInput}
+                    onChangeText={(value) => setSearchTerm(value)}
                 />
                 <Button 
                     title="Search" 
                     buttonStyle={styles.buttonSearch}
+                    onPress={() => handleSearch()}
                     />
             </View>
         )}
